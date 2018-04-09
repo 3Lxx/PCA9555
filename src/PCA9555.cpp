@@ -24,7 +24,7 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
-#include <linux/i2c.h>
+//#include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 #include <stdio.h>      /* Standard I/O functions */
 #include <fcntl.h>
@@ -33,7 +33,7 @@
 #include <errno.h>
 #include <math.h>
 
-#include "PCA9685.h"
+#include "PCA9555.h"
 
 //! Constructor takes bus and address arguments
 /*!
@@ -71,7 +71,7 @@ void PCA9555::setConfig(uint8_t data, int port) {
  \param data bitmask for configuration (1 for Inversion active)
  \param port port 0 or 1 to configure 
  */
-void PCA9555::setConfig(uint8_t data, int port) {
+void PCA9555::setPolInv(uint8_t data, int port) {
 	if(port == 0) i2c->write_byte(POL_INV_0, data);
 	if(port == 1) i2c->write_byte(POL_INV_1, data);
 }
@@ -82,8 +82,8 @@ void PCA9555::setConfig(uint8_t data, int port) {
  \param port port 0 or 1 to configure 
  */
 void PCA9555::setOutput(uint8_t data, int port) {
-	if(port == 0) i2c->write_byte(OUTPUT, data);
-	if(port == 1) i2c->write_byte(OUTPUT, data);
+	if(port == 0) i2c->write_byte(OUTPUT_0, data);
+	if(port == 1) i2c->write_byte(OUTPUT_1, data);
 }
 //! Get the current state of the input port
 /*!
@@ -91,8 +91,8 @@ void PCA9555::setOutput(uint8_t data, int port) {
  */
 uint8_t PCA9555::getInput(int port){
 	uint8_t data = 0;
-	if(port==0) i2c->read_byte(INPUT_0);
-	if(port==1) i2c->read_byte(INPUT_1);
+	if(port==0) data = i2c->read_byte(INPUT_0);
+	if(port==1) data = i2c->read_byte(INPUT_1);
 
-	return ledval;
+	return data;
 }
