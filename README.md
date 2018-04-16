@@ -1,4 +1,4 @@
-PCM9685
+PCA9555
 =======
 
 `lib9555` is a library  for talking to the PCA9555 I<sup>2</sup>C I/O expander by NXP
